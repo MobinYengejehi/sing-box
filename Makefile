@@ -15,8 +15,18 @@ MAIN = ./cmd/sing-box
 PREFIX ?= $(shell go env GOPATH)
 
 OUTPUT_DIR = ./bin/sing-box
+LIB_OUTPUT_DIR = ./bin/sing-box-libs
+
+ifeq ($(GOHOSTOS), windows)
+	LIBBOX_OUT = libbox.lib
+else
+	LIBBOX_OUT = libbox.a
+endif
 
 .PHONY: test release docs build
+
+build-libbox-static:
+	GOOS=$(GOHOSTOS) GOARCH=$(GOHOSTARCH) go build -buildmode=c-archive $(MAIN_PARAMS) -o ${LIB_OUTPUT_DIR}/${LIBBOX_OUT} ./libs/libbox/libbox.go
 
 build:
 	go build $(MAIN_PARAMS) -o ${OUTPUT_DIR} $(MAIN)
