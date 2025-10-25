@@ -15,4 +15,5 @@
 .DS_Store
 /config.d/
 /venv/
+/docker-output/
 

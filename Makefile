@@ -23,7 +23,14 @@ else
 	LIBBOX_OUT = libbox.a
 endif
 
+DOCKER_TAG = ${NAME}:custom
+DOCKER_BUILD_FILE = ./Builder.dockerfile
+DOCKER_OUTPUT = ./docker-output
+
 .PHONY: test release docs build
+
+build-docker:
+	docker build -t ${DOCKER_TAG} -f ${DOCKER_BUILD_FILE} --output type=local,dest=${DOCKER_OUTPUT} .
 
 build-libbox-static:
 	GOOS=$(GOHOSTOS) GOARCH=$(GOHOSTARCH) go build -buildmode=c-archive $(MAIN_PARAMS) -o ${LIB_OUTPUT_DIR}/${LIBBOX_OUT} ./libs/libbox/libbox.go
