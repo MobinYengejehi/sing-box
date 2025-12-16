@@ -1,6 +1,8 @@
 module github.com/sagernet/sing-box
 
-go 1.20
+go 1.23
+
+toolchain go1.24.6
 
 require (
 	berty.tech/go-libtor v1.0.385
@@ -75,6 +77,7 @@ require (
 	github.com/google/pprof v0.0.0-20231101202521-4ca4178f5c7a // indirect
 	github.com/hashicorp/yamux v0.1.2 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+	github.com/itsabgr/ge v0.0.0-20241202140951-7f5c5d99dde6
 	github.com/josharian/native v1.1.0 // indirect
 	github.com/klauspost/compress v1.17.4 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
@@ -94,6 +97,7 @@ require (
 	github.com/vishvananda/netns v0.0.4 // indirect
 	github.com/zeebo/blake3 v0.2.3 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
+	goftp.io/server/v2 v2.0.1
 	golang.org/x/sync v0.10.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/time v0.7.0 // indirect

@@ -14,10 +14,29 @@ MAIN_PARAMS = $(PARAMS) -tags $(TAGS)
 MAIN = ./cmd/sing-box
 PREFIX ?= $(shell go env GOPATH)
 
+OUTPUT_DIR = ./bin/sing-box
+LIB_OUTPUT_DIR = ./bin/sing-box-libs
+
+ifeq ($(GOHOSTOS), windows)
+	LIBBOX_OUT = libbox.lib
+else
+	LIBBOX_OUT = libbox.a
+endif
+
+DOCKER_TAG = ${NAME}:custom
+DOCKER_BUILD_FILE = ./Builder.dockerfile
+DOCKER_OUTPUT = ./docker-output
+
 .PHONY: test release docs build
 
+build-docker:
+	docker build -t ${DOCKER_TAG} -f ${DOCKER_BUILD_FILE} --output type=local,dest=${DOCKER_OUTPUT} .
+
+build-libbox-static:
+	GOOS=$(GOHOSTOS) GOARCH=$(GOHOSTARCH) go build -buildmode=c-archive $(MAIN_PARAMS) -o ${LIB_OUTPUT_DIR}/${LIBBOX_OUT} ./libs/libbox/libbox.go
+
 build:
-	go build $(MAIN_PARAMS) $(MAIN)
+	go build $(MAIN_PARAMS) -o ${OUTPUT_DIR} $(MAIN)
 
 ci_build_go120:
 	go build $(PARAMS) $(MAIN)
